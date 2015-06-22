@@ -2,13 +2,16 @@
 #define SCENE_H
 
 
-class Scene
+namespace Photon
 {
-public:
-    Scene();
-    ~Scene();
+    class Scene
+    {
+    public:
+        Scene();
+        ~Scene();
 
-private:
-};
+    private:
+    };
+}
 
 #endif

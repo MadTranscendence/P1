@@ -17,6 +17,9 @@ header files for C standard library like  etc. and
 on Windows.\
 Resist temptation to include too much in this file - it’ll lead
 to insanity.
+
+
+Static data members should be prefixed by "s_". Other data members should be prefixed by "m_".
 */
 
 #endif

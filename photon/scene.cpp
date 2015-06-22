@@ -2,12 +2,15 @@
 #include "scene.h"
 
 
-Scene::Scene()
+namespace Photon
 {
+    Scene::Scene()
+    {
 
-}
+    }
 
-Scene::~Scene()
-{
+    Scene::~Scene()
+    {
 
+    }
 }
