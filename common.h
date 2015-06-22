@@ -1,6 +1,8 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+
+#include <iostream>
 /*
 All implementation files must #include "config.h" first. Header files should never include "config.h".
 All implementation files must #include the primary header second, just after "config.h".

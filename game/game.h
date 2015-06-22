@@ -1,5 +1,5 @@
-#ifndef CONFIG_H
-#define CONFIG_H
+#ifndef GAME_H
+#define GAME_H
 
 
 class Game
