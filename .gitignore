@@ -26,3 +26,17 @@
 *.exe
 *.out
 *.app
+
+# Binaries dir
+bin
+obj
+
+# Code::Blocks files
+*.depend
+*.layout
+
+# Qt files
+*.pro*
+
+# Logs dir
+log
