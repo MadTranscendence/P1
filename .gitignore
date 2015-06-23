@@ -29,6 +29,7 @@
 
 # Binaries dir
 bin
+obj
 
 # Code::Blocks files
 *.depend
@@ -39,3 +40,6 @@ bin
 
 # Logs dir
 log
+
+# Emacs backup files
+*~
