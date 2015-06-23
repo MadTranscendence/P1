@@ -1,9 +1,0 @@
-os:
- - linux
-language: cpp
-branches:
-  only:
-    - stable
-
-compiler:
- - gcc

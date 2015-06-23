@@ -44,3 +44,5 @@ log
 # Emacs backup files
 *~
 
+# Travis CI's yaml
+.travis.yml
