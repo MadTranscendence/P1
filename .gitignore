@@ -29,6 +29,7 @@
 
 # Binaries dir
 bin
+obj
 
 # Code::Blocks files
 *.depend
