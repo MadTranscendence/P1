@@ -1,5 +1,5 @@
-#include "common.h"
-#include "editor.h"
+#include "common.hpp"
+#include "editor.hpp"
 
 
 Editor::Editor()

@@ -1,5 +1,5 @@
-#ifndef COMMON_H
-#define COMMON_H
+#ifndef COMMON_HPP
+#define COMMON_HPP
 
 
 #include <iostream>
@@ -21,5 +21,7 @@ to insanity.
 
 Static data members should be prefixed by "s_". Other data members should be prefixed by "m_".
 */
+
+void SDLLog(int result);
 
 #endif
