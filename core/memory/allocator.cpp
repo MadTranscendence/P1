@@ -74,40 +74,14 @@ namespace Core
         }
     }
 
-    Allocator::Allocator(size_t size, void* start)
+    MemoryInfo::MemoryInfo(size_t size, void* pointer)
     {
-        m_start          = start;
+        m_pointer        = pointer;
         m_size           = size;
 
         m_usedMemory     = 0;
         m_numAllocations = 0;
     }
 
-    Allocator::~Allocator()
-    {
-        assert(m_numAllocations == 0 && m_usedMemory == 0);
-
-        m_start = nullptr;
-        m_size  = 0;
-    }
-
-    void* Allocator::getStart() const
-    {
-        return m_start;
-    }
-
-    size_t Allocator::getSize() const
-    {
-        return m_size;
-    }
-
-    size_t Allocator::getUsedMemory() const
-    {
-        return m_usedMemory;
-    }
-
-    size_t Allocator::getNumAllocations() const
-    {
-        return m_numAllocations;
-    }
+    MemoryInfo::~MemoryInfo() {}
 }
