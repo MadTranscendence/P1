@@ -48,12 +48,12 @@ namespace Core
             return m_deltaTime;
         }
 
-        double getFps()
+        inline double getFps()
         {
             return m_fps;
         }
 
-        bool didFpsChanged()
+        inline bool didFpsChanged()
         {
             return m_didFpsChanges;
         }

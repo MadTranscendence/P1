@@ -1,6 +1,7 @@
 #include "common.hpp"
 #include "game.hpp"
 
+#include "../core/core.hpp"
 #include "../core/frameTimer.hpp"
 
 #include "../photon/glContext.hpp"
@@ -22,6 +23,8 @@ int Game::run()
 {
     std::cout << "Super creative indie puzzle adventure GNU/Game v0.0.1\n";
 
+    Core::Core core;
+
     Photon::Photon photon;
 
     Photon::WindowDesc windowDesc;
@@ -40,7 +43,7 @@ int Game::run()
     {
         frameTimer.update();
         if(frameTimer.didFpsChanged())
-            window.setTitle("P1 \t" + std::to_string(frameTimer.getFps()));
+            window.setTitle("P1 \t" + std::to_string(frameTimer.getFps()) + " fps");
 
         window.update();
         window.swap();
