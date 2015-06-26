@@ -3,6 +3,8 @@
 
 #include "../types.hpp"
 
+#include <cassert>
+
 
 namespace Core
 {
@@ -27,14 +29,11 @@ namespace Core
 
     struct MemoryInfo
     {
-        MemoryInfo(size_t size, void* pointer);
-        ~MemoryInfo();
+        void*  pointer;
+        size_t size;
 
-        void*  m_pointer;
-        size_t m_size;
-
-        size_t m_usedMemory;
-        size_t m_numAllocations;
+        size_t usedMemory;
+        size_t numAllocations;
     };
 
     template<class AllocatorClass>
@@ -43,7 +42,7 @@ namespace Core
     public:
         Allocator(size_t size, void* pointer) : m_allocator(size, pointer) {}
         ~Allocator() = default;
-
+        
         template<class ObjType, class... Args>
         ObjType* alloc(Args&&... args)
         {
@@ -51,15 +50,53 @@ namespace Core
         }
 
         template<class ObjType, class... Args>
-        void dealloc(ObjType* obj, Args&&... args)
+        ObjType* allocArray(size_t n, Args&&... args)
         {
-            obj->~ObjType();
-            m_allocator.deallocate(obj);
+            assert(n > 0);
+
+            size_t headerSize = sizeof(size_t) / sizeof(ObjType) + ((sizeof(size_t) % sizeof(ObjType)) != 0);
+            size_t arraySize = sizeof(ObjType)*(n + headerSize);
+
+            ObjType* pointer = headerSize + (ObjType*)(m_allocator.allocate(arraySize, alignof(ObjType)));
+            *((size_t*)pointer - 1) = n;
+
+            for(size_t i = 0; i < n; ++i)
+                new (pointer + i) ObjType(std::forward<Args>(args)...);
+
+            return pointer;
+        }
+
+        template<class ObjType>
+        void dealloc(ObjType* pointer)
+        {
+            assert(pointer != nullptr);
+
+            pointer->~ObjType();
+            m_allocator.deallocate(pointer);
+        }
+
+        template<class ObjType>
+        void deallocArray(ObjType* pointer)
+        {
+            assert(pointer != nullptr);
+
+            size_t n = *((size_t*)pointer - 1);
+
+            for(size_t i = 0; i < n; ++i)
+                pointer[i].~ObjType();
+
+            size_t headerSize = sizeof(size_t) / sizeof(ObjType) + ((sizeof(size_t) % sizeof(ObjType)) != 0);
+            m_allocator.deallocate(pointer - headerSize);
+        }
+
+        void clear()
+        {
+            m_allocator.clear();
         }
 
         const MemoryInfo* getMemoryInfo() const
         {
-            m_allocator.getMemoryInfo();
+            return m_allocator.getMemoryInfo();
         }
 
     private:
@@ -68,42 +105,3 @@ namespace Core
 }
 
 #endif
-/*
-
-    template<class T> T* allocateArray(Allocator& allocator, size_t length)
-    {
-        ASSERT(length != 0);
-
-        u8 headerSize = sizeof(size_t)/sizeof(T);
-
-        if(sizeof(size_t)%sizeof(T) > 0)
-            headerSize += 1;
-
-        //Allocate extra space to store array length in the bytes before the array
-        T* p = ( (T*) allocator.allocate(sizeof(T)*(length + headerSize), __alignof(T)) ) + headerSize;
-
-        *( ((size_t*)p) - 1 ) = length;
-
-        for(size_t i = 0; i < length; i++)
-            new (&p[i]) T;
-
-        return p;
-    }
-
-    template<class T> void deallocateArray(Allocator& allocator, T* array)
-    {
-        ASSERT(array != nullptr);
-
-        size_t length = *( ((size_t*)array) - 1 );
-
-        for(size_t i = 0; i < length; i++)
-            array[i].~T();
-
-        //Calculate how much extra memory was allocated to store the length before the array
-        u8 headerSize = sizeof(size_t)/sizeof(T);
-
-        if(sizeof(size_t)%sizeof(T) > 0)
-            headerSize += 1;
-
-        allocator.deallocate(array - headerSize);
-*/

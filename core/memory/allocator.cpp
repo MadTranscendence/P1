@@ -1,8 +1,6 @@
 #include "common.hpp"
 #include "allocator.hpp"
 
-#include <cassert>
-
 
 namespace Core
 {
@@ -73,15 +71,4 @@ namespace Core
             return (const void*)(uptr(ptr) - sz);
         }
     }
-
-    MemoryInfo::MemoryInfo(size_t size, void* pointer)
-    {
-        m_pointer        = pointer;
-        m_size           = size;
-
-        m_usedMemory     = 0;
-        m_numAllocations = 0;
-    }
-
-    MemoryInfo::~MemoryInfo() {}
 }

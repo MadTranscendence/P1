@@ -23,10 +23,11 @@ namespace Core
 
         std::cout << "Created Core utils\n";
 
-        A* a = m_allocator.alloc<A>();
-        m_allocator.dealloc(a);
+        for(int i = 0; i < 1000; ++i)
+            char* c = m_allocator.alloc<char>('a');
+        m_allocator.clear();
 
-        free(m_allocator.getMemoryInfo()->m_pointer);
+        free(m_allocator.getMemoryInfo()->pointer);
     }
 
     Core::~Core()

@@ -19,7 +19,7 @@ namespace Core
         LinearAllocator& operator=(LinearAllocator&&) = delete;
 
         void* allocate(size_t size, u8 alignment);
-        void deallocate(void* p);
+        void deallocate(void*);
 
         void clear();
 
