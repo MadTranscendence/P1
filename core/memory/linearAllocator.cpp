@@ -30,13 +30,13 @@ namespace Core
         if(m_memInfo.usedMemory + adjustment + size > m_memInfo.size)
             return nullptr;
 
-        uptr alignedPtr = uptr(m_currentPtr) + adjustment;
-        m_currentPtr = (void*)(alignedPtr + size);
+        void* alignedPtr = PointerMath::add(m_currentPtr, adjustment);
+        m_currentPtr = PointerMath::add(alignedPtr, size);
 
         m_memInfo.usedMemory += size + adjustment;
         m_memInfo.numAllocations++;
 
-        return (void*)alignedPtr;
+        return alignedPtr;
     }
 
     void LinearAllocator::deallocate(void*)

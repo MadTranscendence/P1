@@ -83,7 +83,7 @@ namespace Core
             size_t n = *((size_t*)pointer - 1);
 
             for(size_t i = 0; i < n; ++i)
-                pointer[i].~ObjType();
+                pointer[n-i-1].~ObjType();
 
             size_t headerSize = sizeof(size_t) / sizeof(ObjType) + ((sizeof(size_t) % sizeof(ObjType)) != 0);
             m_allocator.deallocate(pointer - headerSize);

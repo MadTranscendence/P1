@@ -2,6 +2,7 @@
 #define CORE_HPP
 
 #include "memory/linearAllocator.hpp"
+#include "memory/stackAllocator.hpp"
 
 
 namespace Core
@@ -13,7 +14,7 @@ namespace Core
         ~Core();
 
     private:
-        Allocator<LinearAllocator> m_allocator;
+        Allocator<StackAllocator> m_allocator;
     };
 }
 

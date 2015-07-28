@@ -9,8 +9,17 @@ namespace Core
 {
     struct A
     {
-        A() {std::cout << "Created A\n";}
+        A(int i) {std::cout << "Created A\n";}
         ~A() {std::cout << "Destructed A\n";}
+
+        int a;
+        int b;
+    };
+
+    struct B
+    {
+        B(int i) {std::cout << "Created B\n";}
+        ~B() {std::cout << "Destructed B\n";}
 
         int a;
         int b;
@@ -23,9 +32,11 @@ namespace Core
 
         std::cout << "Created Core utils\n";
 
-        for(int i = 0; i < 1000; ++i)
-            char* c = m_allocator.alloc<char>('a');
-        m_allocator.clear();
+        A* a = m_allocator.allocArray<A>(3, 5);
+        B* b = m_allocator.allocArray<B>(2, 5);
+
+        m_allocator.deallocArray(b);
+        m_allocator.deallocArray(a);
 
         free(m_allocator.getMemoryInfo()->pointer);
     }
