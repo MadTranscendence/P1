@@ -41,7 +41,7 @@ namespace Core
 
     void LinearAllocator::deallocate(void*)
     {
-        assert(0 && "Linear allocator does not implement deallocate. Use clear instead");
+        assert(false && "Linear allocator does not implement deallocate. Use clear instead.");
     }
 
     void LinearAllocator::clear()

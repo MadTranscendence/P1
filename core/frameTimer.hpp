@@ -14,7 +14,7 @@ namespace Core
 
         void start()
         {
-            m_didFpsChanges = false;
+            m_didFpsChanged = false;
 
             m_prevTime = m_deltaTime = m_accumulator = 0.0;
             m_framesNum = m_framesAcc = m_fps = 0.0;
@@ -23,7 +23,7 @@ namespace Core
 
         void update()
         {
-            m_didFpsChanges = false;
+            m_didFpsChanged = false;
 
             m_prevTime += m_deltaTime;
             m_deltaTime = double(m_timer.getTicks()) - m_prevTime;
@@ -39,7 +39,7 @@ namespace Core
                 m_framesNum = 0.0;
                 m_framesAcc = 0.0;
 
-                m_didFpsChanges = true;
+                m_didFpsChanged = true;
             }
         }
 
@@ -55,7 +55,7 @@ namespace Core
 
         inline bool didFpsChanged()
         {
-            return m_didFpsChanges;
+            return m_didFpsChanged;
         }
 
         unsigned getFixedSteps(double fixedDelta)
@@ -75,7 +75,7 @@ namespace Core
 
         double m_fps;
 
-        bool   m_didFpsChanges;
+        bool   m_didFpsChanged;
 
         Timer<> m_timer;
     };
