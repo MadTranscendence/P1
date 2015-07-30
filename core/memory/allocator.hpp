@@ -94,6 +94,11 @@ namespace Core
             m_allocator.clear();
         }
 
+        AllocatorClass* getInternalAllocator()
+        {
+            return &m_allocator;
+        }
+
         const MemoryInfo* getMemoryInfo() const
         {
             return m_allocator.getMemoryInfo();

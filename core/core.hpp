@@ -14,7 +14,7 @@ namespace Core
         ~Core();
 
     private:
-        Allocator<StackAllocator> m_allocator;
+        Allocator<StackAllocator> m_stackAllocator;
     };
 }
 

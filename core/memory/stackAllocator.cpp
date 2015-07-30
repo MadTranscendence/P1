@@ -56,7 +56,7 @@ namespace Core
         AllocationHeader* header = (AllocationHeader*)PointerMath::sub(pointer, sizeof(AllocationHeader));
 
         #ifndef NDEBUG
-        assert(m_prevPtr == pointer && "Stack allocator requires allocations/deallocations to be in reverse order.");
+        assert(m_prevPtr == pointer && "Stack allocator performs deallocations only in the reverse order of allocations.");
         m_prevPtr = header->prevPtr;
         #endif
 
