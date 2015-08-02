@@ -1,9 +1,8 @@
 TARGET   = P1
 
 COMPILER = g++
-CXXFLAGS = -std=c++11 -Wall
 
-LIBS     = -lSDL2
+CXXFLAGS = $(INCLUDES) -std=c++11 -Wall -Wextra -Wpedantic -msse3
 
 INCLUDES = -I./
 
@@ -20,22 +19,23 @@ SOURCES  = common.cpp \
            photon/scene.cpp \
            photon/window.cpp
 
-OBJECTS  = $(SOURCES:.cpp=.o)
-
 OBJECTS_DIR = obj/
+
+OBJECTS  = $(SOURCES:%.cpp=$(OBJECTS_DIR)%.o)
+
+LIBS     = -lSDL2
 
 .PHONY: all clean
 
 all: $(TARGET)
 
 $(TARGET): $(OBJECTS)
-	$(COMPILER) -o $(TARGET) $(addprefix $(OBJECTS_DIR), $(OBJECTS)) $(LIBS)
+	$(COMPILER) -o $(TARGET) $(OBJECTS) $(LIBS)
 
-%.o: %.cpp
-	@mkdir -p $(dir $(OBJECTS_DIR)$@)
-	$(COMPILER) $(CXXFLAGS) $(INCLUDES) -o $(OBJECTS_DIR)$@ -c $<
+$(OBJECTS_DIR)%.o: %.cpp
+	@mkdir -p $(dir $@)
+	$(COMPILER) $(CXXFLAGS) -o $@ -c $<
 
 clean:
 	rm -f  $(TARGET)
 	rm -rf $(OBJECTS_DIR)
-	rm -f  *~
