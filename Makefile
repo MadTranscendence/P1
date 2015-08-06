@@ -1,10 +1,12 @@
 TARGET   = P1.elf
 
-COMPILER = g++
+COMPILER = clang++
 
 CXXFLAGS = $(INCLUDES) -std=c++11 -Wall -Wextra -Wpedantic -msse3
 
-INCLUDES = -I./
+INCLUDES = -I$(SOURCES_DIR)
+
+SOURCES_DIR = src/
 
 SOURCES  = common.cpp \
            core/core.cpp \
@@ -32,7 +34,7 @@ all: $(TARGET)
 $(TARGET): $(OBJECTS)
 	$(COMPILER) -o $(TARGET) $(OBJECTS) $(LIBS)
 
-$(OBJECTS_DIR)%.o: %.cpp
+$(OBJECTS_DIR)%.o: $(SOURCES_DIR)%.cpp
 	@mkdir -p $(dir $@)
 	$(COMPILER) $(CXXFLAGS) -o $@ -c $<
 
