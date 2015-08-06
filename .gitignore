@@ -40,3 +40,9 @@ obj
 
 # Logs dir
 log
+
+# Emacs backup files
+*~
+
+# Executable files
+*.elf

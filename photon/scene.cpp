@@ -1,5 +1,5 @@
-#include "common.h"
-#include "scene.h"
+#include "common.hpp"
+#include "scene.hpp"
 
 
 namespace Photon

@@ -1,28 +1,22 @@
-#include "common.h"
-#include "photon.h"
+#include "common.hpp"
+#include "photon.hpp"
 
 #include <SDL2/SDL.h>
 
 
 namespace Photon
 {
-    bool init()
+    Photon::Photon()
     {
-        SDL_Init(SDL_INIT_VIDEO);
+        SDLLog(SDL_Init(SDL_INIT_VIDEO));
 
-        SDL_GL_SetSwapInterval(1);
-
-        //SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS,    1);
-        //SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES,    2);
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
-        SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL,    1);
-
-        return true;
+        std::cout << "Created Photon module\n";
     }
 
-    void release()
+    Photon::~Photon()
     {
         SDL_Quit();
+
+        std::cout << "Destructed Photon module\n";
     }
 }

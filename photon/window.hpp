@@ -1,6 +1,7 @@
-#ifndef WINDOW_H
-#define WINDOW_H
+#ifndef WINDOW_HPP
+#define WINDOW_HPP
 
+#include <memory>
 #include <SDL2/SDL.h>
 #include <string>
 
@@ -24,11 +25,13 @@ namespace Photon
         void update();
         void swap();
 
+        void setTitle(std::string title);
+
         SDL_Window* getSDLWindow();
         bool isClosed();
 
     private:
-        SDL_Window* m_window;
+        std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> m_window;
         bool m_isClosed;
     };
 }

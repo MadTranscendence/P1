@@ -1,7 +1,7 @@
-#ifndef GL_CONTEXT_H
-#define GL_CONTEXT_H
+#ifndef GL_CONTEXT_HPP
+#define GL_CONTEXT_HPP
 
-#include "window.h"
+#include "window.hpp"
 
 
 namespace Photon

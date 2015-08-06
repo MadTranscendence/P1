@@ -1,5 +1,5 @@
-#ifndef EDITOR_H
-#define EDITOR_H
+#ifndef EDITOR_HPP
+#define EDITOR_HPP
 
 
 class Editor
