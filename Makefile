@@ -39,3 +39,6 @@ $(OBJECTS_DIR)%.o: %.cpp
 clean:
 	rm -f  $(TARGET)
 	rm -rf $(OBJECTS_DIR)
+
+test:
+	./test.sh

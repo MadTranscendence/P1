@@ -1,0 +1,10 @@
+os:
+ - linux
+language: cpp
+branches:
+  only:
+    - stable
+    - dura
+
+compiler:
+ - gcc
