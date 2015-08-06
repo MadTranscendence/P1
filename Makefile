@@ -1,4 +1,4 @@
-TARGET   = P1
+TARGET   = P1.elf
 
 COMPILER = g++
 
@@ -36,9 +36,9 @@ $(OBJECTS_DIR)%.o: %.cpp
 	@mkdir -p $(dir $@)
 	$(COMPILER) $(CXXFLAGS) -o $@ -c $<
 
+test:
+	./test.sh
+
 clean:
 	rm -f  $(TARGET)
 	rm -rf $(OBJECTS_DIR)
-
-test:
-	./test.sh
