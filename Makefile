@@ -11,8 +11,10 @@ SOURCES_DIR = src/
 SOURCES  = common.cpp \
            core/core.cpp \
            core/memory/allocator.cpp \
+           core/memory/baseAllocator.cpp \
            core/memory/linearAllocator.cpp \
            core/memory/stackAllocator.cpp \
+           core/memory/utils.cpp \
            editor/editor.cpp \
            game/game.cpp \
            main.cpp \

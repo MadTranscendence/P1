@@ -1,7 +1,7 @@
 #ifndef STACK_ALLOCATOR_HPP
 #define STACK_ALLOCATOR_HPP
 
-#include "allocator.hpp"
+#include "utils.hpp"
 
 
 namespace Core
@@ -13,10 +13,10 @@ namespace Core
         ~StackAllocator();
 
         StackAllocator(const StackAllocator&) = delete;
-        StackAllocator(StackAllocator&&) = delete;
+        StackAllocator(StackAllocator&& stackAllocator);
 
         StackAllocator& operator=(const StackAllocator&) = delete;
-        StackAllocator& operator=(StackAllocator&&) = delete;
+        StackAllocator& operator=(StackAllocator&& stackAllocator);
 
         void* allocate(size_t size, u8 alignment);
         void deallocate(void* pointer);

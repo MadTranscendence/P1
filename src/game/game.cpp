@@ -1,4 +1,4 @@
-#include "common.hpp"
+#include "../common.hpp"
 #include "game.hpp"
 
 #include "../core/core.hpp"
@@ -43,7 +43,7 @@ int Game::run()
     {
         frameTimer.update();
         if(frameTimer.didFpsChanged())
-            window.setTitle("P1 \t" + std::to_string(frameTimer.getFps()) + " fps");
+            window.setTitle("P1 \t" + std::to_string(unsigned(frameTimer.getFps())) + " fps");
 
         window.update();
         window.swap();

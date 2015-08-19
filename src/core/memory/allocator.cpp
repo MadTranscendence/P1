@@ -1,74 +1,33 @@
-#include "common.hpp"
+#include "../../common.hpp"
 #include "allocator.hpp"
 
 
 namespace Core
 {
-    namespace PointerMath
+    template<>
+    Allocator<BaseAllocator, BaseAllocator>::Allocator() : m_size(0), m_source(nullptr) {}
+
+    template<>
+    Allocator<BaseAllocator, BaseAllocator>::Allocator(size_t, Allocator<BaseAllocator>*) {}
+
+    template<>
+    Allocator<BaseAllocator, BaseAllocator>::~Allocator() {}
+
+    template<>
+    void* Allocator<BaseAllocator, BaseAllocator>::allocPlain(size_t size, u8 alignment)
     {
-        void* alignForward(void* address, u8 alignment)
-        {
-            return (void*)((uptr(address) + uptr(alignment-1)) & uptr(~(alignment-1)));
-        }
+        if(m_allocators.empty())
+            m_allocators.emplace_back();
 
-        const void* alignForward(const void* address, u8 alignment)
-        {
-            return (const void*)((uptr(address) + uptr(alignment-1)) & uptr(~(alignment-1)));
-        }
+        return m_allocators.back().allocate(size, alignment);
+    }
 
-        void* alignBackward(void* address, u8 alignment)
-        {
-            return (void*)(uptr(address) & uptr(~(alignment-1)));
-        }
+    template<>
+    void Allocator<BaseAllocator, BaseAllocator>::deallocPlain(void* pointer)
+    {
+        if(m_allocators.empty())
+            assert(false && "Attempted to deallocate pointer without valid BaseAllocator");
 
-        const void* alignBackward(const void* address, u8 alignment)
-        {
-            return (const void*)(uptr(address) & uptr(~(alignment-1)));
-        }
-
-        u8 alignForwardAdjustment(const void* address, u8 alignment)
-        {
-            u8 adjustment = alignment - (uptr(address) & uptr(alignment-1));
-
-            if(adjustment == alignment)
-                return 0;
-
-            return adjustment;
-        }
-
-        u8 alignForwardAdjustmentHeader(const void* address, u8 alignment, u8 headerSize)
-        {
-            return headerSize + alignForwardAdjustment(add(address, headerSize), alignment);
-        }
-
-        u8 alignBackwardAdjustment(const void* address, u8 alignment)
-        {
-            u8 adjustment = (uptr(address) & uptr(alignment-1));
-
-            if(adjustment == alignment)
-                return 0;
-
-            return adjustment;
-        }
-
-        void* add(void* ptr, size_t sz)
-        {
-            return (void*)(uptr(ptr) + sz);
-        }
-
-        const void* add(const void* ptr, size_t sz)
-        {
-            return (const void*)(uptr(ptr) + sz);
-        }
-
-        void* sub(void* ptr, size_t sz)
-        {
-            return (void*)(uptr(ptr) - sz);
-        }
-
-        const void* sub(const void* ptr, size_t sz)
-        {
-            return (const void*)(uptr(ptr) - sz);
-        }
+        return m_allocators.back().deallocate(pointer);
     }
 }

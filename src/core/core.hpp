@@ -1,8 +1,7 @@
 #ifndef CORE_HPP
 #define CORE_HPP
 
-#include "memory/linearAllocator.hpp"
-#include "memory/stackAllocator.hpp"
+#include "memory/allocator.hpp"
 
 
 namespace Core
@@ -14,7 +13,7 @@ namespace Core
         ~Core();
 
     private:
-        Allocator<StackAllocator> m_stackAllocator;
+        Allocator<BaseAllocator> m_baseAllocator;
     };
 }
 

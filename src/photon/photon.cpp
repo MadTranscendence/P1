@@ -1,4 +1,4 @@
-#include "common.hpp"
+#include "../common.hpp"
 #include "photon.hpp"
 
 #include <SDL2/SDL.h>

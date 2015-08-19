@@ -1,7 +1,7 @@
 #ifndef LINEAR_ALLOCATOR_HPP
 #define LINEAR_ALLOCATOR_HPP
 
-#include "allocator.hpp"
+#include "utils.hpp"
 
 
 namespace Core
@@ -13,10 +13,10 @@ namespace Core
         ~LinearAllocator();
 
         LinearAllocator(const LinearAllocator&) = delete;
-        LinearAllocator(LinearAllocator&&) = delete;
+        LinearAllocator(LinearAllocator&& linearAllocator);
 
         LinearAllocator& operator=(const LinearAllocator&) = delete;
-        LinearAllocator& operator=(LinearAllocator&&) = delete;
+        LinearAllocator& operator=(LinearAllocator&& linearAllocator);
 
         void* allocate(size_t size, u8 alignment);
         void deallocate(void*);

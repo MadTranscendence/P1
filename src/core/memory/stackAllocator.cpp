@@ -1,4 +1,4 @@
-#include "common.hpp"
+#include "../../common.hpp"
 #include "stackAllocator.hpp"
 
 #include <cassert>
@@ -25,6 +25,28 @@ namespace Core
     StackAllocator::~StackAllocator()
     {
         assert(m_memInfo.usedMemory == 0);
+    }
+
+    StackAllocator::StackAllocator(StackAllocator&& stackAllocator)
+    {
+        m_memInfo = std::move(stackAllocator.m_memInfo);
+        m_currentPtr = stackAllocator.m_currentPtr;
+
+        #ifndef NDEBUG
+        m_prevPtr = stackAllocator.m_prevPtr;
+        #endif
+    }
+
+    StackAllocator& StackAllocator::operator=(StackAllocator&& stackAllocator)
+    {
+        m_memInfo = std::move(stackAllocator.m_memInfo);
+        m_currentPtr = stackAllocator.m_currentPtr;
+
+        #ifndef NDEBUG
+        m_prevPtr = stackAllocator.m_prevPtr;
+        #endif
+
+        return *this;
     }
 
     void* StackAllocator::allocate(size_t size, u8 alignment)
@@ -56,7 +78,7 @@ namespace Core
         AllocationHeader* header = (AllocationHeader*)PointerMath::sub(pointer, sizeof(AllocationHeader));
 
         #ifndef NDEBUG
-        assert(m_prevPtr == pointer && "Stack allocator performs deallocations only in the reverse order of allocations.");
+        assert(m_prevPtr == pointer && "Stack allocator performs deallocation only in reverse order of allocation.");
         m_prevPtr = header->prevPtr;
         #endif
 
