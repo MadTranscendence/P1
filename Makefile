@@ -1,6 +1,6 @@
 TARGET   = P1.elf
 
-COMPILER = clang++
+CXX ?= g++
 
 CXXFLAGS = $(INCLUDES) -std=c++11 -Wall -Wextra -Wpedantic -msse3
 
@@ -32,11 +32,11 @@ LIBS     = -lSDL2
 all: $(TARGET)
 
 $(TARGET): $(OBJECTS)
-	$(COMPILER) -o $(TARGET) $(OBJECTS) $(LIBS)
+	$(CXX) -o $(TARGET) $(OBJECTS) $(LIBS)
 
 $(OBJECTS_DIR)%.o: $(SOURCES_DIR)%.cpp
 	@mkdir -p $(dir $@)
-	$(COMPILER) $(CXXFLAGS) -o $@ -c $<
+	$(CXX) $(CXXFLAGS) -o $@ -c $<
 
 test:
 	./test.sh
