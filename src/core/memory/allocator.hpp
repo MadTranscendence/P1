@@ -2,51 +2,34 @@
 #define ALLOCATOR_HPP
 
 #include "../types.hpp"
+#include "baseAllocator.hpp"
+#include "linearAllocator.hpp"
+#include "stackAllocator.hpp"
 
 #include <cassert>
+#include <vector>
 
 
 namespace Core
 {
-    namespace PointerMath
-    {
-        void*       alignForward(void* address, u8 alignment);
-        const void* alignForward(const void* address, u8 alignment);
-        void*       alignBackward(void* address, u8 alignment);
-        const void* alignBackward(const void* address, u8 alignment);
-
-        u8          alignForwardAdjustment(const void* address, u8 alignment);
-        u8          alignForwardAdjustmentHeader(const void* address, u8 alignment, u8 headerSize);
-
-        u8          alignBackwardAdjustment(const void* address, u8 alignment);
-
-        void*       add(void* ptr, size_t sz);
-        const void* add(const void* ptr, size_t sz);
-
-        void*       sub(void* ptr, size_t sz);
-        const void* sub(const void* ptr, size_t sz);
-    }
-
-    struct MemoryInfo
-    {
-        void*  pointer;
-        size_t size;
-
-        size_t usedMemory;
-        size_t numAllocations;
-    };
-
-    template<class AllocatorClass>
+    template<class AllocatorClass, class SourceClass = BaseAllocator>
     class Allocator
     {
     public:
-        Allocator(size_t size, void* pointer) : m_allocator(size, pointer) {}
-        ~Allocator() = default;
+        Allocator() {}
+
+        Allocator(size_t size, Allocator<SourceClass>* source) : m_size(size), m_source(source) {}
+
+        ~Allocator()
+        {
+            for(AllocatorClass& allocator : m_allocators)
+                m_source->deallocPlain(allocator.getMemoryInfo()->pointer);
+        }
         
         template<class ObjType, class... Args>
         ObjType* alloc(Args&&... args)
         {
-            return new (m_allocator.allocate(sizeof(ObjType), alignof(ObjType))) ObjType(std::forward<Args>(args)...);
+            return new (allocPlain(sizeof(ObjType), alignof(ObjType))) ObjType(std::forward<Args>(args)...);
         }
 
         template<class ObjType, class... Args>
@@ -57,7 +40,7 @@ namespace Core
             size_t headerSize = sizeof(size_t) / sizeof(ObjType) + ((sizeof(size_t) % sizeof(ObjType)) != 0);
             size_t arraySize = sizeof(ObjType)*(n + headerSize);
 
-            ObjType* pointer = headerSize + (ObjType*)(m_allocator.allocate(arraySize, alignof(ObjType)));
+            ObjType* pointer = headerSize + (ObjType*)(allocPlain(arraySize, alignof(ObjType)));
             *((size_t*)pointer - 1) = n;
 
             for(size_t i = 0; i < n; ++i)
@@ -72,7 +55,7 @@ namespace Core
             assert(pointer != nullptr);
 
             pointer->~ObjType();
-            m_allocator.deallocate(pointer);
+            deallocPlain(pointer);
         }
 
         template<class ObjType>
@@ -86,27 +69,79 @@ namespace Core
                 pointer[n-i-1].~ObjType();
 
             size_t headerSize = sizeof(size_t) / sizeof(ObjType) + ((sizeof(size_t) % sizeof(ObjType)) != 0);
-            m_allocator.deallocate(pointer - headerSize);
+            deallocPlain(pointer - headerSize);
         }
 
         void clear()
         {
-            m_allocator.clear();
+            for(AllocatorClass& allocator : m_allocators)
+                allocator.clear();
         }
 
-        AllocatorClass* getInternalAllocator()
+        AllocatorClass* getInternalAllocator(unsigned i)
         {
-            return &m_allocator;
+            return &m_allocators[i];
         }
 
-        const MemoryInfo* getMemoryInfo() const
+        const MemoryInfo* getMemoryInfo(unsigned i) const
         {
-            return m_allocator.getMemoryInfo();
+            return m_allocators[i].getMemoryInfo();
+        }
+
+        unsigned getNumAllocators()
+        {
+            return m_allocators.size();
         }
 
     private:
-        AllocatorClass m_allocator;
+        std::vector<AllocatorClass> m_allocators;
+        size_t                      m_size;
+        Allocator<SourceClass>*     m_source;
+
+        void* allocPlain(size_t size, u8 alignment)
+        {
+            for(AllocatorClass& allocator : m_allocators)
+            {
+                void* pointer = allocator.allocate(size, alignment);
+                if(pointer != nullptr)
+                    return pointer;
+            }
+
+            m_allocators.emplace_back(m_size, m_source->allocPlain(m_size, alignof(char)));
+            return m_allocators.back().allocate(size, alignment);
+        }
+
+        void deallocPlain(void* pointer)
+        {
+            for(AllocatorClass& allocator : m_allocators)
+            {
+                const MemoryInfo* memInfo = allocator.getMemoryInfo();
+                char* pointerMin = (char*)memInfo->pointer;
+                char* pointerMax = (char*)memInfo->pointer + memInfo->size;
+
+                if(pointer >= pointerMin && pointer < pointerMax)
+                {
+                    allocator.deallocate(pointer);
+                    return;
+                }
+            }
+        }
     };
+
+    template<>
+    Allocator<BaseAllocator, BaseAllocator>::Allocator();
+
+    template<>
+    Allocator<BaseAllocator, BaseAllocator>::Allocator(size_t, Allocator<BaseAllocator>*);
+
+    template<>
+    Allocator<BaseAllocator, BaseAllocator>::~Allocator();
+
+    template<>
+    void* Allocator<BaseAllocator, BaseAllocator>::allocPlain(size_t size, u8 alignment);
+
+    template<>
+    void Allocator<BaseAllocator, BaseAllocator>::deallocPlain(void* pointer);
 }
 
 #endif

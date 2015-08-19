@@ -1,4 +1,4 @@
-#include "common.hpp"
+#include "../../common.hpp"
 #include "linearAllocator.hpp"
 
 #include <cassert>
@@ -23,6 +23,20 @@ namespace Core
         assert(m_memInfo.usedMemory == 0);
     }
 
+    LinearAllocator::LinearAllocator(LinearAllocator&& linearAllocator)
+    {
+        m_memInfo = std::move(linearAllocator.m_memInfo);
+        m_currentPtr = linearAllocator.m_currentPtr;
+    }
+
+    LinearAllocator& LinearAllocator::operator=(LinearAllocator&& linearAllocator)
+    {
+        m_memInfo = std::move(linearAllocator.m_memInfo);
+        m_currentPtr = linearAllocator.m_currentPtr;
+
+        return *this;
+    }
+
     void* LinearAllocator::allocate(size_t size, u8 alignment)
     {
         u8 adjustment = PointerMath::alignForwardAdjustment(m_currentPtr, alignment);
@@ -41,7 +55,7 @@ namespace Core
 
     void LinearAllocator::deallocate(void*)
     {
-        assert(false && "Linear allocator does not implement deallocate. Use clear instead.");
+        assert(false && "Linear allocator does not implement deallocate(). Use clear() instead.");
     }
 
     void LinearAllocator::clear()
