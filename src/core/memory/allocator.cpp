@@ -8,7 +8,10 @@ namespace Core
     Allocator<BaseAllocator, BaseAllocator>::Allocator() : m_size(0), m_source(nullptr) {}
 
     template<>
-    Allocator<BaseAllocator, BaseAllocator>::Allocator(size_t, Allocator<BaseAllocator>*) {}
+    Allocator<BaseAllocator, BaseAllocator>::Allocator(size_t, Allocator<BaseAllocator>*)
+    {
+        assert(false && "Allocator of type BaseAllocator does not take any parameters in its constructor.");
+    }
 
     template<>
     Allocator<BaseAllocator, BaseAllocator>::~Allocator() {}

@@ -22,7 +22,7 @@ namespace Photon
         Window(WindowDesc& windowDesc);
         ~Window();
 
-        void update();
+        void processEvents();
         void swap();
 
         void setTitle(std::string title);
