@@ -16,7 +16,10 @@ namespace Core
     class Allocator
     {
     public:
-        Allocator() {}
+        Allocator()
+        {
+            assert(false && "Allocator of type other than BaseAllocator takes its size and source as parameters.");
+        }
 
         Allocator(size_t size, Allocator<SourceClass>* source) : m_size(size), m_source(source) {}
 
@@ -93,11 +96,6 @@ namespace Core
             return m_allocators.size();
         }
 
-    private:
-        std::vector<AllocatorClass> m_allocators;
-        size_t                      m_size;
-        Allocator<SourceClass>*     m_source;
-
         void* allocPlain(size_t size, u8 alignment)
         {
             for(AllocatorClass& allocator : m_allocators)
@@ -116,8 +114,8 @@ namespace Core
             for(AllocatorClass& allocator : m_allocators)
             {
                 const MemoryInfo* memInfo = allocator.getMemoryInfo();
-                char* pointerMin = (char*)memInfo->pointer;
-                char* pointerMax = (char*)memInfo->pointer + memInfo->size;
+                void* pointerMin = (char*)memInfo->pointer;
+                void* pointerMax = (char*)memInfo->pointer + memInfo->size;
 
                 if(pointer >= pointerMin && pointer < pointerMax)
                 {
@@ -126,6 +124,11 @@ namespace Core
                 }
             }
         }
+
+    private:
+        std::vector<AllocatorClass> m_allocators;
+        size_t                      m_size;
+        Allocator<SourceClass>*     m_source;
     };
 
     template<>

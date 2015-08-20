@@ -45,7 +45,7 @@ int Game::run()
         if(frameTimer.didFpsChanged())
             window.setTitle("P1 \t" + std::to_string(unsigned(frameTimer.getFps())) + " fps");
 
-        window.update();
+        window.processEvents();
         window.swap();
     }
 

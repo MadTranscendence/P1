@@ -1,15 +1,24 @@
 #include "../common.hpp"
 #include "window.hpp"
 
+#include <cassert>
+
 
 namespace Photon
 {
     Window::Window(WindowDesc& windowDesc) : m_window(nullptr, SDL_DestroyWindow)
     {
-        unsigned flags = SDL_WINDOW_OPENGL;
+        SDLLog(SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3));
+        SDLLog(SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3));
+        SDLLog(SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS,    1));
+        SDLLog(SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES,    2));
+        SDLLog(SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,          1));
+        SDLLog(SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,           24));
+
+        unsigned flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
 
         if(windowDesc.isFullscreen)
-            flags += SDL_WINDOW_FULLSCREEN;
+            flags |= SDL_WINDOW_FULLSCREEN;
 
         m_window = std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)>(
             SDL_CreateWindow(
@@ -21,6 +30,8 @@ namespace Photon
                 flags
             ), SDL_DestroyWindow);
 
+        assert(m_window);
+
         m_isClosed = false;
 
         std::cout << "Created window " << m_window.get() << '\n';
@@ -31,10 +42,10 @@ namespace Photon
         std::cout << "Destructed window " << m_window.get() << '\n';
     }
 
-    void Window::update()
+    void Window::processEvents()
     {
         static SDL_Event event;
-        while(SDL_PollEvent(&event))
+        if(SDL_PollEvent(&event))
         {
             switch(event.type)
             {
