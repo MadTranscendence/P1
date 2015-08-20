@@ -17,3 +17,9 @@ addons:
  apt:
   packages:
    - libsdl2-dev
+   - g++-4.8
+  sources:
+   - ubuntu-toolchain-r-test
+   
+   before_install:
+    - alias g++=g++-4.8
