@@ -15,10 +15,11 @@ compiler:
 addons:
  apt:
   packages:
-   - libsdl2-dev
+   - libsdl2
    - g++-4.8
   sources:
    - ubuntu-toolchain-r-test
+   - zoogie/sdl2-snapshots
    
 before_install:
  - alias g++=g++-4.8
