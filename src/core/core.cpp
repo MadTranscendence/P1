@@ -24,6 +24,9 @@ namespace Core
         m_stackAllocator.deallocArray(arr3);
         m_stackAllocator.deallocArray(arr2);
         m_stackAllocator.deallocArray(arr1);
+
+        int* a = m_stackAllocator.alloc<int>(2);
+        m_stackAllocator.dealloc(a);
     }
 
     Core::~Core()

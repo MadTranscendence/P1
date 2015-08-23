@@ -31,7 +31,7 @@ int Game::run()
     windowDesc.width  = 800;
     windowDesc.height = 600;
     windowDesc.isFullscreen = false;
-    windowDesc.title = "P1";
+    windowDesc.title  = "P1";
 
     Photon::Window    window(windowDesc);
     Photon::GlContext glContext(&window);
