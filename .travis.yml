@@ -26,6 +26,11 @@ install:
  - cd SDL2-2.0.3
  - ./configure && make && sudo make install
  - cd -
+ - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+ - sudo apt-get -qq update
+ - sudo apt-get -qq install g++-4.8
+ - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
+# - alias g++ g++4.8
 
 # addons:
 #  apt:
