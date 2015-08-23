@@ -15,7 +15,7 @@ namespace Photon
         SDLLog(SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,          1));
         SDLLog(SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,           24));
 
-        unsigned flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
+        uint flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
 
         if(windowDesc.isFullscreen)
             flags |= SDL_WINDOW_FULLSCREEN;

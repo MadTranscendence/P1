@@ -75,20 +75,23 @@ namespace Core
 
     void StackAllocator::deallocate(void* pointer)
     {
-        AllocationHeader* header = (AllocationHeader*)PointerMath::sub(pointer, sizeof(AllocationHeader));
+        if(pointer)
+        {
+            AllocationHeader* header = (AllocationHeader*)PointerMath::sub(pointer, sizeof(AllocationHeader));
 
-        #ifndef NDEBUG
-        assert(m_prevPtr == pointer && "Stack allocator performs deallocation only in reverse order of allocation.");
-        m_prevPtr = header->prevPtr;
-        #endif
+            #ifndef NDEBUG
+            assert(m_prevPtr == pointer && "Stack allocator performs deallocation only in reverse order of allocation.");
+            m_prevPtr = header->prevPtr;
+            #endif
 
-        m_memInfo.usedMemory -= (uptr)m_currentPtr;
-        m_memInfo.usedMemory += (uptr)pointer;
-        m_memInfo.usedMemory -= header->adjustment;
+            m_memInfo.usedMemory -= (uptr)m_currentPtr;
+            m_memInfo.usedMemory += (uptr)pointer;
+            m_memInfo.usedMemory -= header->adjustment;
 
-        m_memInfo.numAllocations--;
+            m_memInfo.numAllocations--;
 
-        m_currentPtr = PointerMath::sub(pointer, header->adjustment);
+            m_currentPtr = PointerMath::sub(pointer, header->adjustment);
+        }
     }
 
     void StackAllocator::clear()

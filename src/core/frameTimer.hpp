@@ -2,6 +2,7 @@
 #define FRAME_TIMER_HPP
 
 #include "timer.hpp"
+#include "types.hpp"
 
 
 namespace Core
@@ -58,9 +59,9 @@ namespace Core
             return m_didFpsChanged;
         }
 
-        unsigned getFixedSteps(double fixedDelta)
+        uint getFixedSteps(double fixedDelta)
         {
-            unsigned fixedSteps = unsigned(m_accumulator / fixedDelta);
+            uint fixedSteps = uint(m_accumulator / fixedDelta);
             m_accumulator -= float(fixedSteps) * fixedDelta;
             return fixedSteps;
         }

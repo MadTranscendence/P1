@@ -2,6 +2,6 @@
 #include "src/core/memory/allocator.hpp"
 
 
-TEST_CASE("Testing Allocator", "[core] [memory] [allocator]")
+TEST_CASE("Testing Allocator", "[core][memory][allocator]")
 {
 }
