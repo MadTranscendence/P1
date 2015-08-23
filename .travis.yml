@@ -1,26 +1,49 @@
-sudo: false
+#sudo: false
 
 os:
  - linux
+
+env:
+ global:
+  - LD_LIBRARY_PATH: /usr/local/lib
+
 language: cpp
+
 branches:
-  only:
-    - stable
-    - malisz
-    - dura
+ only:
+  - stable
+  - malisz
+  - dura
 
 compiler:
  - gcc
  - clang
 
-addons:
- apt:
-  packages:
-   - libsdl2
-   - g++-4.8
-  sources:
-   - ubuntu-toolchain-r-test
-   - zoogie/sdl2-snapshots
+install:
+ # SDL2
+ - wget http://www.libsdl.org/release/SDL2-2.0.3.tar.gz
+ - tar -zxvf SDL2-2.0.3.tar.gz
+ - cd SDL2-2.0.3
+ - ./configure && make && sudo make install
+ - cd -
+
+# addons:
+#  apt:
+#   packages:
+#    - libsdl2
+#    - g++-4.8
+#   sources:
+#    - ubuntu-toolchain-r-test
+#    - zoogie/sdl2-snapshots
    
-before_install:
- - alias g++=g++-4.8
+# before_install:
+#  - alias g++=g++-4.8
+
+
+
+
+
+
+
+
+
