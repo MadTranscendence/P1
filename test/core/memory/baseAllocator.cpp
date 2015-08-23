@@ -27,7 +27,6 @@ TEST_CASE("Test Base Allocator", "[core][memory][baseAllocator]")
 
             CHECK(baseAllocator.getMemoryInfo()->numAllocations == i+1);
             CHECK(allocPointers[i] != nullptr);
-            CHECK(((uptr)allocPointers[i] % alignment) == 0);
         }
 
         for(uint i = 0; i < allocCount; ++i)
