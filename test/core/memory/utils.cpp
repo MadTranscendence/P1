@@ -5,9 +5,9 @@
 using namespace Core;
 
 
-TEST_CASE("Testing Pointer Math", "[core][memory][utils]")
+TEST_CASE("Test Pointer Math", "[core][memory][utils]")
 {
-    SECTION("Aligning with alignment = 1")
+    SECTION("Align with alignment = 1")
     {
         u8 alignment = 1;
         void* alignedPointer = (void*)0x8880;
@@ -15,28 +15,28 @@ TEST_CASE("Testing Pointer Math", "[core][memory][utils]")
         INFO("alignment := " << (uint)alignment);
         CAPTURE(alignedPointer);
 
-        SECTION("Aligning forward")
+        SECTION("Align forward")
         {
             CHECK(PointerMath::alignForward(alignedPointer, alignment) == alignedPointer);
         }
 
-        SECTION("Aligning backward")
+        SECTION("Align backward")
         {
             CHECK(PointerMath::alignBackward(alignedPointer, alignment) == alignedPointer);
         }
 
-        SECTION("Aligning forward adjustment")
+        SECTION("Align forward adjustment")
         {
             CHECK(PointerMath::alignForwardAdjustment(alignedPointer, alignment) == 0);
         }
 
-        SECTION("Aligning backward adjustment")
+        SECTION("Align backward adjustment")
         {
             CHECK(PointerMath::alignBackwardAdjustment(alignedPointer, alignment) == 0);
         }
     }
 
-    SECTION("Aligning with alignment = 16")
+    SECTION("Align with alignment = 16")
     {
         u8 alignment = 16;
         void* alignedPointer   = (void*)0x8880;
@@ -46,28 +46,28 @@ TEST_CASE("Testing Pointer Math", "[core][memory][utils]")
         CAPTURE(alignedPointer);
         CAPTURE(unalignedPointer);
 
-        SECTION("Aligning forward")
+        SECTION("Align forward")
         {
             CHECK(PointerMath::alignForward(alignedPointer, alignment) == alignedPointer);
             CHECK(PointerMath::alignForward(unalignedPointer, alignment) > unalignedPointer);
             CHECK(((uptr)PointerMath::alignForward(unalignedPointer, alignment) % alignment) == 0);
         }
 
-        SECTION("Aligning backward")
+        SECTION("Align backward")
         {
             CHECK(PointerMath::alignBackward(alignedPointer, alignment) == alignedPointer);
             CHECK(PointerMath::alignBackward(unalignedPointer, alignment) < unalignedPointer);
             CHECK(((uptr)PointerMath::alignBackward(unalignedPointer, alignment) % alignment) == 0);
         }
 
-        SECTION("Aligning forward adjustment")
+        SECTION("Align forward adjustment")
         {
             CHECK(PointerMath::alignForwardAdjustment(alignedPointer, alignment) == 0);
             CHECK(PointerMath::alignForwardAdjustment(unalignedPointer, alignment) < alignment);
             CHECK(((PointerMath::alignForwardAdjustment(unalignedPointer, alignment) + (uptr)unalignedPointer) % alignment) == 0);
         }
 
-        SECTION("Aligning backward adjustment")
+        SECTION("Align backward adjustment")
         {
             CHECK(PointerMath::alignBackwardAdjustment(alignedPointer, alignment) == 0);
             CHECK(PointerMath::alignBackwardAdjustment(unalignedPointer, alignment) < alignment);
@@ -75,7 +75,7 @@ TEST_CASE("Testing Pointer Math", "[core][memory][utils]")
         }
     }
 
-    SECTION("Pointers arithmetic")
+    SECTION("Check pointers arithmetic")
     {
         void* pointer = (void*)0x8880;
         size_t offset = 24;

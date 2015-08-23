@@ -5,7 +5,7 @@
 using namespace Core;
 
 
-TEST_CASE("Testing Stack Allocator", "[core][memory][stackAllocator]")
+TEST_CASE("Test Stack Allocator", "[core][memory][stackAllocator]")
 {
     u8 alignment = 64;
     INFO("alignment := " << (uint)alignment);
