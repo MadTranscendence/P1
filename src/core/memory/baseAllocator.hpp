@@ -18,7 +18,7 @@ namespace Core
         BaseAllocator& operator=(const BaseAllocator&) = delete;
         BaseAllocator& operator=(BaseAllocator&& baseAllocator);
 
-        void* allocate(size_t size, u8 alignment);
+        void* allocate(size_t size, u8);
         void deallocate(void* pointer);
 
         void clear();

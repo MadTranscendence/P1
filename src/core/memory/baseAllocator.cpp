@@ -31,10 +31,10 @@ namespace Core
         return *this;
     }
 
-    void* BaseAllocator::allocate(size_t size, u8 alignment)
+    void* BaseAllocator::allocate(size_t size, u8)
     {
         m_memInfo.numAllocations++;
-        return aligned_alloc(alignment, size);
+        return malloc(size);
     }
 
     void BaseAllocator::deallocate(void* pointer)
