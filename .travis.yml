@@ -6,6 +6,7 @@ os:
 env:
  global:
   - LD_LIBRARY_PATH: /usr/local/lib
+  - LIBSTDC_VERSION=4.9
 
 language: cpp
 
