@@ -33,6 +33,10 @@ namespace Core
         void*       sub(void* ptr, size_t sz);
         const void* sub(const void* ptr, size_t sz);
     }
+
+    size_t KBytesToBytes(size_t kiloBytes);
+    size_t MBytesToBytes(size_t megaBytes);
+    size_t GBytesToBytes(size_t gigaBytes);
 }
 
 #endif

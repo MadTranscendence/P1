@@ -12,6 +12,8 @@ TEST_CASE("Test Base Allocator", "[core][memory][baseAllocator]")
 
     BaseAllocator baseAllocator;
 
+    CHECK_NOTHROW(baseAllocator.deallocate(nullptr));
+
     const size_t allocCount = 4;
     size_t allocSizes[allocCount] = {32, 128, 512, 1024};
     void*  allocPointers[allocCount];
@@ -38,6 +40,4 @@ TEST_CASE("Test Base Allocator", "[core][memory][baseAllocator]")
             CHECK(baseAllocator.getMemoryInfo()->numAllocations == allocCount-i-1);
         }
     }
-
-    CHECK_NOTHROW(baseAllocator.deallocate(nullptr));
 }

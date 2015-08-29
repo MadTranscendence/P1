@@ -18,7 +18,7 @@ namespace Core
             m_didFpsChanged = false;
 
             m_prevTime = m_deltaTime = m_accumulator = 0.0;
-            m_framesNum = m_framesAcc = m_fps = 0.0;
+            m_numFrames = m_framesAcc = m_fps = 0.0;
             m_timer.start();
         }
 
@@ -31,13 +31,13 @@ namespace Core
 
             m_accumulator = std::min<>(m_accumulator + m_deltaTime, 200.0);
 
-            m_framesNum += 1.0;
+            m_numFrames += 1.0;
             m_framesAcc += m_deltaTime;
 
             if(m_framesAcc >= 800.0)
             {
-                m_fps = 1000.0 * m_framesNum / m_framesAcc;
-                m_framesNum = 0.0;
+                m_fps = 1000.0 * m_numFrames / m_framesAcc;
+                m_numFrames = 0.0;
                 m_framesAcc = 0.0;
 
                 m_didFpsChanged = true;
@@ -71,7 +71,7 @@ namespace Core
         double m_deltaTime;
         double m_accumulator;
 
-        double m_framesNum;
+        double m_numFrames;
         double m_framesAcc;
 
         double m_fps;

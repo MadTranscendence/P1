@@ -13,6 +13,8 @@ TEST_CASE("Test Stack Allocator", "[core][memory][stackAllocator]")
     size_t allocSize = 4096;
     StackAllocator stackAllocator(allocSize, malloc(allocSize));
 
+    CHECK_NOTHROW(stackAllocator.deallocate(nullptr));
+
     CAPTURE(stackAllocator.getMemoryInfo()->pointer);
 
     const size_t allocCount = 4;
@@ -64,8 +66,6 @@ TEST_CASE("Test Stack Allocator", "[core][memory][stackAllocator]")
         CHECK(stackAllocator.getMemoryInfo()->numAllocations == 0);
         CHECK(stackAllocator.getMemoryInfo()->usedMemory == 0);
     }
-
-    CHECK_NOTHROW(stackAllocator.deallocate(nullptr));
 
     free(stackAllocator.getMemoryInfo()->pointer);
 }

@@ -71,4 +71,19 @@ namespace Core
             return (const void*)(uptr(ptr) - sz);
         }
     }
+
+    size_t KBytesToBytes(size_t kiloBytes)
+    {
+        return kiloBytes * (1 << 10);
+    }
+
+    size_t MBytesToBytes(size_t megaBytes)
+    {
+        return megaBytes * (1 << 20);
+    }
+
+    size_t GBytesToBytes(size_t gigaBytes)
+    {
+        return gigaBytes * (1 << 30);
+    }
 }

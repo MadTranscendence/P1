@@ -2,7 +2,7 @@ TARGET   = $(BIN_DIR)/P1.elf
 
 CXX     ?= g++
 
-CXXFLAGS = $(INCLUDES) -std=c++11 -Wall -Wextra -Wpedantic -msse3
+CXXFLAGS = $(INCLUDES) -std=c++11 -Wall -Wextra -Wpedantic -msse3 -O3
 
 INCLUDES = -I.
 
@@ -22,11 +22,11 @@ all: $(TARGET)
 
 $(TARGET): $(OBJECTS)
 	mkdir -p $(@D)
-	$(CXX) -o $@ $^ $(LIBS)
+	$(CXX) $^ $(LIBS) -o $@
 
 $(OBJECTS_DIR)/%.o: $(SOURCES_DIR)/%.cpp
 	mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) -o $@ -c $<
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
 	rm -rf $(BIN_DIR)/
@@ -45,10 +45,10 @@ test: $(TEST_TARGET)
 
 $(TEST_TARGET): $(TEST_OBJECTS)
 	mkdir -p $(@D)
-	$(CXX) -o $@ $^ $(LIBS)
+	$(CXX) $^ $(LIBS) -o $@
 	$@
 
 $(OBJECTS_DIR)/$(TEST_DIR)/%.o: $(TEST_DIR)/%.cpp
 	mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) -o $@ -c $<
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
