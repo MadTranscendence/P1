@@ -3,12 +3,18 @@
 os:
  - linux
 
+language: cpp
+
+matrix:
+compiler:
+ - gcc
+ - clang
 env:
  global:
   - LD_LIBRARY_PATH: /usr/local/lib
   - LIBSTDC_VERSION=4.9
-
-language: cpp
+ allow_failures:
+  - clang
 
 branches:
  only:
@@ -16,9 +22,6 @@ branches:
   - malisz
   - dura
 
-compiler:
- - gcc
- - clang
 
 before_install:
   - echo "deb http://llvm.org/apt/precise/ llvm-toolchain-precise main" | sudo tee -a /etc/apt/sources.list
