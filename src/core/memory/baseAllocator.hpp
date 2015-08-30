@@ -19,7 +19,7 @@ namespace Core
         BaseAllocator& operator=(BaseAllocator&& baseAllocator);
 
         void* allocate(size_t size, u8);
-        void deallocate(void* pointer);
+        void  deallocate(void* pointer);
 
         void clear();
 

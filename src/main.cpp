@@ -3,5 +3,6 @@
 
 int main()
 {
-    return Game().run();
+    Game game;
+    return game.run();
 }

@@ -3,6 +3,7 @@
 
 #include "../types.hpp"
 #include "baseAllocator.hpp"
+#include "freeListAllocator.hpp"
 #include "linearAllocator.hpp"
 #include "stackAllocator.hpp"
 

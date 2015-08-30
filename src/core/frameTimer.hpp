@@ -29,14 +29,14 @@ namespace Core
             m_prevTime += m_deltaTime;
             m_deltaTime = double(m_timer.getTicks()) - m_prevTime;
 
-            m_accumulator = std::min<>(m_accumulator + m_deltaTime, 200.0);
+            m_accumulator = std::min<>(m_accumulator + m_deltaTime, 200000.0);
 
             m_numFrames += 1.0;
             m_framesAcc += m_deltaTime;
 
-            if(m_framesAcc >= 800.0)
+            if(m_framesAcc >= 800000.0)
             {
-                m_fps = 1000.0 * m_numFrames / m_framesAcc;
+                m_fps = 1000000.0 * m_numFrames / m_framesAcc;
                 m_numFrames = 0.0;
                 m_framesAcc = 0.0;
 
@@ -78,7 +78,7 @@ namespace Core
 
         bool   m_didFpsChanged;
 
-        Timer<> m_timer;
+        Timer<TimerHighResolution, TimerMicroseconds> m_timer;
     };
 }
 

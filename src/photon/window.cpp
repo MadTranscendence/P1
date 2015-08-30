@@ -30,8 +30,6 @@ namespace Photon
                 flags
             ), SDL_DestroyWindow);
 
-        assert(m_window);
-
         m_isClosed = false;
 
         std::cout << "Created window " << m_window.get() << '\n';

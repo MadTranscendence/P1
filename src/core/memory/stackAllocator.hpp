@@ -19,20 +19,13 @@ namespace Core
         StackAllocator& operator=(StackAllocator&& stackAllocator);
 
         void* allocate(size_t size, u8 alignment);
-        void deallocate(void* pointer);
+        void  deallocate(void* pointer);
 
         void clear();
 
         const MemoryInfo* getMemoryInfo() const;
 
     private:
-        MemoryInfo m_memInfo;
-        void*      m_currentPtr;
-
-        #ifndef NDEBUG
-        void* m_prevPtr;
-        #endif
-
         struct AllocationHeader
         {
             u8 adjustment;
@@ -41,6 +34,13 @@ namespace Core
             void* prevPtr;
             #endif
         };
+
+        MemoryInfo m_memInfo;
+        void*      m_currentPtr;
+
+        #ifndef NDEBUG
+        void* m_prevPtr;
+        #endif
     };
 }
 

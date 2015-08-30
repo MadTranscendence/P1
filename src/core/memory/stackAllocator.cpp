@@ -11,11 +11,9 @@ namespace Core
         assert(pointer != nullptr);
         assert(size > 0);
 
-        m_memInfo.pointer        = pointer;
-        m_memInfo.size           = size;
-        m_memInfo.usedMemory     = 0;
-        m_memInfo.numAllocations = 0;
-        m_currentPtr = pointer;
+        m_memInfo.pointer = pointer;
+        m_memInfo.size    = size;
+        m_currentPtr      = pointer;
 
         #ifndef NDEBUG
         m_prevPtr = nullptr;
@@ -29,7 +27,7 @@ namespace Core
 
     StackAllocator::StackAllocator(StackAllocator&& stackAllocator)
     {
-        m_memInfo = std::move(stackAllocator.m_memInfo);
+        m_memInfo    = std::move(stackAllocator.m_memInfo);
         m_currentPtr = stackAllocator.m_currentPtr;
 
         #ifndef NDEBUG
@@ -39,7 +37,7 @@ namespace Core
 
     StackAllocator& StackAllocator::operator=(StackAllocator&& stackAllocator)
     {
-        m_memInfo = std::move(stackAllocator.m_memInfo);
+        m_memInfo    = std::move(stackAllocator.m_memInfo);
         m_currentPtr = stackAllocator.m_currentPtr;
 
         #ifndef NDEBUG
@@ -64,7 +62,7 @@ namespace Core
 
         #ifndef NDEBUG
         header->prevPtr = m_prevPtr;
-        m_prevPtr = alignedPtr;
+        m_prevPtr       = alignedPtr;
         #endif
 
         m_memInfo.usedMemory += size + adjustment;
@@ -98,7 +96,7 @@ namespace Core
     {
         m_memInfo.usedMemory     = 0;
         m_memInfo.numAllocations = 0;
-        m_currentPtr = m_memInfo.pointer;
+        m_currentPtr             = m_memInfo.pointer;
     }
 
     const MemoryInfo* StackAllocator::getMemoryInfo() const

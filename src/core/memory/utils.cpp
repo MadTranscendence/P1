@@ -4,6 +4,40 @@
 
 namespace Core
 {
+    MemoryInfo::MemoryInfo()
+    {
+        usedMemory     = 0;
+        numAllocations = 0;
+    }
+
+    MemoryInfo::MemoryInfo(MemoryInfo&& memoryInfo)
+    {
+        pointer        = memoryInfo.pointer;
+        size           = memoryInfo.size;
+        usedMemory     = memoryInfo.usedMemory;
+        numAllocations = memoryInfo.numAllocations;
+
+        memoryInfo.pointer        = nullptr;
+        memoryInfo.size           = 0;
+        memoryInfo.usedMemory     = 0;
+        memoryInfo.numAllocations = 0;
+    }
+
+    MemoryInfo& MemoryInfo::operator=(MemoryInfo&& memoryInfo)
+    {
+        pointer        = memoryInfo.pointer;
+        size           = memoryInfo.size;
+        usedMemory     = memoryInfo.usedMemory;
+        numAllocations = memoryInfo.numAllocations;
+
+        memoryInfo.pointer        = nullptr;
+        memoryInfo.size           = 0;
+        memoryInfo.usedMemory     = 0;
+        memoryInfo.numAllocations = 0;
+
+        return *this;
+    }
+
     namespace PointerMath
     {
         void* alignForward(void* address, u8 alignment)
