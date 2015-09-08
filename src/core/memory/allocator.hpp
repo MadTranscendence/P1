@@ -3,6 +3,7 @@
 
 #include "../types.hpp"
 #include "baseAllocator.hpp"
+#include "freeListAllocator.hpp"
 #include "linearAllocator.hpp"
 #include "stackAllocator.hpp"
 
@@ -81,17 +82,17 @@ namespace Core
                 allocator.clear();
         }
 
-        AllocatorClass* getInternalAllocator(unsigned i)
+        AllocatorClass* getInternalAllocator(uint i)
         {
             return &m_allocators[i];
         }
 
-        const MemoryInfo* getMemoryInfo(unsigned i) const
+        const MemoryInfo* getMemoryInfo(uint i) const
         {
             return m_allocators[i].getMemoryInfo();
         }
 
-        unsigned getNumAllocators()
+        uint getNumAllocators()
         {
             return m_allocators.size();
         }

@@ -4,6 +4,40 @@
 
 namespace Core
 {
+    MemoryInfo::MemoryInfo()
+    {
+        usedMemory     = 0;
+        numAllocations = 0;
+    }
+
+    MemoryInfo::MemoryInfo(MemoryInfo&& memoryInfo)
+    {
+        pointer        = memoryInfo.pointer;
+        size           = memoryInfo.size;
+        usedMemory     = memoryInfo.usedMemory;
+        numAllocations = memoryInfo.numAllocations;
+
+        memoryInfo.pointer        = nullptr;
+        memoryInfo.size           = 0;
+        memoryInfo.usedMemory     = 0;
+        memoryInfo.numAllocations = 0;
+    }
+
+    MemoryInfo& MemoryInfo::operator=(MemoryInfo&& memoryInfo)
+    {
+        pointer        = memoryInfo.pointer;
+        size           = memoryInfo.size;
+        usedMemory     = memoryInfo.usedMemory;
+        numAllocations = memoryInfo.numAllocations;
+
+        memoryInfo.pointer        = nullptr;
+        memoryInfo.size           = 0;
+        memoryInfo.usedMemory     = 0;
+        memoryInfo.numAllocations = 0;
+
+        return *this;
+    }
+
     namespace PointerMath
     {
         void* alignForward(void* address, u8 alignment)
@@ -70,5 +104,20 @@ namespace Core
         {
             return (const void*)(uptr(ptr) - sz);
         }
+    }
+
+    size_t KBytesToBytes(size_t kiloBytes)
+    {
+        return kiloBytes * (1 << 10);
+    }
+
+    size_t MBytesToBytes(size_t megaBytes)
+    {
+        return megaBytes * (1 << 20);
+    }
+
+    size_t GBytesToBytes(size_t gigaBytes)
+    {
+        return gigaBytes * (1 << 30);
     }
 }

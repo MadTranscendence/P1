@@ -8,10 +8,8 @@ namespace Core
 {
     BaseAllocator::BaseAllocator()
     {
-        m_memInfo.pointer        = nullptr;
-        m_memInfo.size           = 0;
-        m_memInfo.usedMemory     = 0;
-        m_memInfo.numAllocations = 0;
+        m_memInfo.pointer = nullptr;
+        m_memInfo.size    = 0;
     }
 
     BaseAllocator::~BaseAllocator()
@@ -33,14 +31,20 @@ namespace Core
 
     void* BaseAllocator::allocate(size_t size, u8)
     {
-        m_memInfo.numAllocations++;
-        return malloc(size);
+        void *pointer = malloc(size);
+        if(pointer)
+            m_memInfo.numAllocations++;
+
+        return pointer;
     }
 
     void BaseAllocator::deallocate(void* pointer)
     {
-        m_memInfo.numAllocations--;
-        free(pointer);
+        if(pointer)
+        {
+            m_memInfo.numAllocations--;
+            free(pointer);
+        }
     }
 
     void BaseAllocator::clear()

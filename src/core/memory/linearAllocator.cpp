@@ -11,11 +11,9 @@ namespace Core
         assert(pointer != nullptr);
         assert(size > 0);
 
-        m_memInfo.pointer        = pointer;
-        m_memInfo.size           = size;
-        m_memInfo.usedMemory     = 0;
-        m_memInfo.numAllocations = 0;
-        m_currentPtr = pointer;
+        m_memInfo.pointer = pointer;
+        m_memInfo.size    = size;
+        m_currentPtr      = pointer;
     }
 
     LinearAllocator::~LinearAllocator()
@@ -25,13 +23,13 @@ namespace Core
 
     LinearAllocator::LinearAllocator(LinearAllocator&& linearAllocator)
     {
-        m_memInfo = std::move(linearAllocator.m_memInfo);
+        m_memInfo    = std::move(linearAllocator.m_memInfo);
         m_currentPtr = linearAllocator.m_currentPtr;
     }
 
     LinearAllocator& LinearAllocator::operator=(LinearAllocator&& linearAllocator)
     {
-        m_memInfo = std::move(linearAllocator.m_memInfo);
+        m_memInfo    = std::move(linearAllocator.m_memInfo);
         m_currentPtr = linearAllocator.m_currentPtr;
 
         return *this;
@@ -62,7 +60,7 @@ namespace Core
     {
         m_memInfo.usedMemory     = 0;
         m_memInfo.numAllocations = 0;
-        m_currentPtr = m_memInfo.pointer;
+        m_currentPtr             = m_memInfo.pointer;
     }
 
     const MemoryInfo* LinearAllocator::getMemoryInfo() const

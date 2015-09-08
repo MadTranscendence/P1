@@ -8,6 +8,15 @@ namespace Core
 {
     struct MemoryInfo
     {
+        MemoryInfo();
+        ~MemoryInfo() = default;
+
+        MemoryInfo(const MemoryInfo& memoryInfo) = default;
+        MemoryInfo(MemoryInfo&& memoryInfo);
+
+        MemoryInfo& operator=(const MemoryInfo& memoryInfo) = default;
+        MemoryInfo& operator=(MemoryInfo&& memoryInfo);
+
         void*  pointer;
         size_t size;
 
@@ -32,6 +41,22 @@ namespace Core
 
         void*       sub(void* ptr, size_t sz);
         const void* sub(const void* ptr, size_t sz);
+    }
+
+    size_t KBytesToBytes(size_t kiloBytes);
+    size_t MBytesToBytes(size_t megaBytes);
+    size_t GBytesToBytes(size_t gigaBytes);
+
+    template<class T>
+    constexpr const T& min(const T& a, const T& b)
+    {
+        return (b < a) ? b : a;
+    }
+
+    template<class T>
+    constexpr const T& max(const T& a, const T& b)
+    {
+        return (a < b) ? b : a;
     }
 }
 
