@@ -2,11 +2,13 @@ TARGET   = $(BIN_DIR)/P1.elf
 
 CXX     ?= g++
 
-CXXFLAGS = $(INCLUDES) -std=c++11 -Wall -Wextra -Wpedantic -msse3 -O3
+CXXFLAGS = $(INCLUDES_DIR) -std=c++11 -Wall -Wextra -Wpedantic -msse3 -O3
 
-INCLUDES = -I.
+INCLUDES_DIR = -I.
 
 BIN_DIR = bin
+
+INCLUDES = $(shell cd $(SOURCES_DIR) && find ./ -type f -name '*.hpp' | sed 's:^\./::')
 
 SOURCES_DIR = src
 SOURCES  = $(shell cd $(SOURCES_DIR) && find ./ -type f -name '*.cpp' | sed 's:^\./::')
@@ -16,7 +18,7 @@ OBJECTS  = $(SOURCES:%.cpp=$(OBJECTS_DIR)/%.o)
 
 LIBS     = -lSDL2
 
-.PHONY: all clean test
+.PHONY: all clean test doc
 
 all: $(TARGET)
 
@@ -27,10 +29,6 @@ $(TARGET): $(OBJECTS)
 $(OBJECTS_DIR)/%.o: $(SOURCES_DIR)/%.cpp
 	mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-clean:
-	rm -rf $(BIN_DIR)/
-	rm -rf $(OBJECTS_DIR)/
 
 TEST_TARGET  = $(BIN_DIR)/test.elf
 
@@ -52,3 +50,15 @@ $(OBJECTS_DIR)/$(TEST_DIR)/%.o: $(TEST_DIR)/%.cpp
 	mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
+DOC_DIR    = doc
+
+doc:
+	cldoc generate $(CXXFLAGS) -- \
+		--output $(DOC_DIR) \
+		--basedir $(SOURCES_DIR) \
+		$(INCLUDES:%.hpp=$(SOURCES_DIR)/%.hpp)
+
+clean:
+	rm -rf $(BIN_DIR)
+	rm -rf $(OBJECTS_DIR)
+	rm -rf $(DOC_DIR)

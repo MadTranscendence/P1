@@ -28,7 +28,7 @@ int Game::run()
     Photon::WindowDesc windowDesc;
     windowDesc.width  = 800;
     windowDesc.height = 600;
-    windowDesc.isFullscreen = true;
+    windowDesc.isFullscreen = false;
     windowDesc.title  = "P1";
 
     Photon::Window    window(windowDesc);

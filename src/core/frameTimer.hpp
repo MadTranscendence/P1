@@ -4,6 +4,8 @@
 #include "timer.hpp"
 #include "types.hpp"
 
+#include "algorithm"
+
 
 namespace Core
 {

@@ -6,6 +6,8 @@ namespace Core
 {
     MemoryInfo::MemoryInfo()
     {
+        pointer        = nullptr;
+        size           = 0;
         usedMemory     = 0;
         numAllocations = 0;
     }

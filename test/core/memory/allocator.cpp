@@ -93,9 +93,9 @@ TEST_CASE("Test Allocator", "[core][memory][allocator]")
     Allocator<FreeListAllocator> freeListAllocator(MBytesToBytes(512), &baseAllocator);
 
     const uint   multiplier = 1500;
-    const uint   numPasses = 8;
-    const uint   numAllocs[numPasses]  = {3000, 2000, 2000, 2000, 1500, 1000, 600, 400};
-    const size_t allocSizes[numPasses] = {64, 256, KBytesToBytes(1), KBytesToBytes(4), KBytesToBytes(64), KBytesToBytes(128), KBytesToBytes(256), MBytesToBytes(1)};
+    const uint   numPasses = 7;
+    const uint   numAllocs[numPasses]  = {2000, 2000, 2000, 1500, 1000, 600, 400};
+    const size_t allocSizes[numPasses] = {256, KBytesToBytes(1), KBytesToBytes(4), KBytesToBytes(64), KBytesToBytes(128), KBytesToBytes(256), MBytesToBytes(1)};
 
     int baseAllocatorTime[numPasses];
     int linearAllocatorTime[numPasses];

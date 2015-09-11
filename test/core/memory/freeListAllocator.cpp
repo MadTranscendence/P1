@@ -7,6 +7,13 @@ using namespace Core;
 
 TEST_CASE("Test Free List Allocator", "[core][memory][freeListAllocator]")
 {
+    std::vector<int> vector;
+
+
+
+
+
+
     u8 alignment = 64;
     INFO("alignment := " << (uint)alignment);
 
