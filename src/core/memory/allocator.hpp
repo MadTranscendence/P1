@@ -19,17 +19,18 @@ namespace Core
     public:
         Allocator()
         {
-            assert(false && "Allocator of type other than BaseAllocator takes its size and source as parameters.");
+            assert(false && "Allocator of type other than BaseAllocator takes block size and source as parameters.");
         }
 
-        Allocator(size_t size, Allocator<SourceClass>* source) : m_size(size), m_source(source) {}
+        Allocator(size_t size, Allocator<SourceClass>* source)
+            : m_size(size), m_source(source) {}
 
         ~Allocator()
         {
             for(AllocatorClass& allocator : m_allocators)
                 m_source->deallocPlain(allocator.getMemoryInfo()->pointer);
         }
-        
+
         template<class ObjType, class... Args>
         ObjType* alloc(Args&&... args)
         {
@@ -82,21 +83,6 @@ namespace Core
                 allocator.clear();
         }
 
-        AllocatorClass* getInternalAllocator(uint i)
-        {
-            return &m_allocators[i];
-        }
-
-        const MemoryInfo* getMemoryInfo(uint i) const
-        {
-            return m_allocators[i].getMemoryInfo();
-        }
-
-        uint getNumAllocators()
-        {
-            return m_allocators.size();
-        }
-
         void* allocPlain(size_t size, u8 alignment)
         {
             for(AllocatorClass& allocator : m_allocators)
@@ -124,6 +110,26 @@ namespace Core
                     return;
                 }
             }
+        }
+
+        AllocatorClass* getInternalAllocator(uint i)
+        {
+            return &m_allocators[i];
+        }
+
+        const MemoryInfo* getMemoryInfo(uint i) const
+        {
+            return m_allocators[i].getMemoryInfo();
+        }
+
+        uint getNumAllocators()
+        {
+            return m_allocators.size();
+        }
+
+        size_t getBlockSize()
+        {
+            return m_size;
         }
 
     private:
