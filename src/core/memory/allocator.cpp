@@ -10,7 +10,7 @@ namespace Core
     template<>
     Allocator<BaseAllocator, BaseAllocator>::Allocator(size_t, Allocator<BaseAllocator>*)
     {
-        assert(false && "Allocator of type BaseAllocator does not take any parameters in its constructor.");
+        assert(false && "Allocator of type BaseAllocator expects no arguments in constructor.");
     }
 
     template<>

@@ -8,10 +8,10 @@ INCLUDES_DIR = -I.
 
 BIN_DIR = bin
 
-INCLUDES = $(shell cd $(SOURCES_DIR) && find ./ -type f -name '*.hpp' | sed 's:^\./::')
+INCLUDES = $(shell cd $(SOURCES_DIR) && find ./ -type f -name '*.hpp')
 
 SOURCES_DIR = src
-SOURCES  = $(shell cd $(SOURCES_DIR) && find ./ -type f -name '*.cpp' | sed 's:^\./::')
+SOURCES  = $(shell cd $(SOURCES_DIR) && find ./ -type f -name '*.cpp')
 
 OBJECTS_DIR = obj
 OBJECTS  = $(SOURCES:%.cpp=$(OBJECTS_DIR)/%.o)
@@ -34,7 +34,7 @@ TEST_TARGET  = $(BIN_DIR)/test.elf
 
 TEST_DIR     = test
 TEST_SOURCES_FILTER = main.cpp
-TEST_SOURCES = $(shell find $(TEST_DIR)/ -type f -name '*.cpp' | sed 's:^\./::')
+TEST_SOURCES = $(shell find $(TEST_DIR)/ -type f -name '*.cpp')
 
 TEST_OBJECTS_FILTER = $(TEST_SOURCES_FILTER:%.cpp=$(OBJECTS_DIR)/%.o)
 TEST_OBJECTS = $(TEST_SOURCES:%.cpp=$(OBJECTS_DIR)/%.o) $(filter-out $(TEST_OBJECTS_FILTER), $(OBJECTS))

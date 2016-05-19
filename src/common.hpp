@@ -22,6 +22,6 @@ to insanity.
 Static data members should be prefixed by "s_". Other data members should be prefixed by "m_".
 */
 
-void SDLLog(int result);
+int SDLLog(int result);
 
 #endif

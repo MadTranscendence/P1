@@ -12,6 +12,9 @@ namespace Core
         Core();
         ~Core();
 
+        Allocator<FreeListAllocator>* getFreeListAllocator();
+        Allocator<StackAllocator>*    getStackAllocator();
+
     private:
         Allocator<BaseAllocator>     m_baseAllocator;
         Allocator<FreeListAllocator> m_freeListAllocator;

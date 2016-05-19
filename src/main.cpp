@@ -3,6 +3,6 @@
 
 int main()
 {
-    Game game;
+    Game::Game game;
     return game.run();
 }

@@ -1,8 +1,12 @@
 #ifndef SCENE_HPP
 #define SCENE_HPP
 
+#include "component.hpp"
+#include "gameObject.hpp"
+#include "node.hpp"
 
-namespace Photon
+
+namespace Game
 {
     class Scene
     {

@@ -8,7 +8,7 @@
 namespace Core
 {
     Core::Core()
-        : m_freeListAllocator(MBytesToBytes(64), &m_baseAllocator),
+        : m_freeListAllocator(MBytesToBytes(256), &m_baseAllocator),
           m_stackAllocator(MBytesToBytes(64), &m_baseAllocator)
     {
         _MM_SET_FLUSH_ZERO_MODE(_MM_FLUSH_ZERO_ON);
@@ -20,5 +20,15 @@ namespace Core
     Core::~Core()
     {
         std::cout << "Destructed Core module\n";
+    }
+
+    Allocator<FreeListAllocator>* Core::getFreeListAllocator()
+    {
+        return &m_freeListAllocator;
+    }
+
+    Allocator<StackAllocator>* Core::getStackAllocator()
+    {
+        return &m_stackAllocator;
     }
 }

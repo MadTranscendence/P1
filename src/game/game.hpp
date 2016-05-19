@@ -2,15 +2,18 @@
 #define GAME_HPP
 
 
-class Game
+namespace Game
 {
-public:
-    Game();
-    ~Game();
+    class Game
+    {
+    public:
+        Game();
+        ~Game();
 
-    int run();
+        int run();
 
-private:
-};
+    private:
+    };
+}
 
 #endif

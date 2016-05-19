@@ -2,7 +2,7 @@
 #include "scene.hpp"
 
 
-namespace Photon
+namespace Game
 {
     Scene::Scene()
     {

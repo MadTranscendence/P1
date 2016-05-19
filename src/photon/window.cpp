@@ -2,6 +2,7 @@
 #include "window.hpp"
 
 #include <cassert>
+#include <vector>
 
 
 namespace Photon
@@ -33,6 +34,37 @@ namespace Photon
         m_isClosed = false;
 
         std::cout << "Created window " << m_window.get() << '\n';
+
+        //////////////
+        /// Test
+        /// Waiting for rendering implementation
+        ///
+        std::vector<SDL_DisplayMode> displayModes;
+        displayModes.reserve(20);
+
+        int numVideoDisp = SDLLog(SDL_GetNumVideoDisplays());
+        for(int i = 0; i < numVideoDisp; ++i)
+        {
+            const char* name = SDL_GetDisplayName(i);
+
+            std::cout << '\n' << name << ":\n";
+
+            int numDisp = SDLLog(SDL_GetNumDisplayModes(i));
+            for(int j = 0; j < numDisp; ++j)
+            {
+                SDL_DisplayMode dispMode;
+                SDLLog(SDL_GetDisplayMode(i, j, &dispMode));
+                displayModes.push_back(dispMode);
+
+                std::cout << '\t' << dispMode.w << " x " << dispMode.h << ", "
+                          << dispMode.refresh_rate  << "Hz, " << dispMode.format << '\n';
+            }
+        }
+
+        SDLLog(SDL_SetWindowDisplayMode(m_window.get(), &displayModes.front()));
+        ///
+        /// End Test
+        //////////////
     }
 
     Window::~Window()
